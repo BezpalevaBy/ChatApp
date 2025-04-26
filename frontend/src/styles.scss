@@ -1,34 +1,116 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 
 body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #f7f7fb;
-  color: #333;
+  background: #f5f5fa;
+  font-family: 'Helvetica Neue', sans-serif;
   margin: 0;
+  padding: 0;
 }
 
-.container {
-  max-width: 480px;
-  margin: 0 auto;
-  padding-top: 3rem;
+.login-screen, .chat-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
-input, textarea {
-  border-radius: 20px !important;
-  padding: 10px 15px;
-  font-size: 15px;
+.title {
+  font-size: 48px;
+  margin-bottom: 20px;
 }
 
-button {
+.login-box, .chat-box {
+  background: #fff;
+  padding: 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  width: 360px;
+  height: 100vh; /* растягиваем по вертикали */
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-name {
+  font-size: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
   border-radius: 20px;
-  font-weight: 300;
-  padding: 6px 20px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
 }
 
-.list-group-item {
+.login-button, .send-button {
+  background: #7c838a;
+  color: white;
+  padding: 10px 20px;
   border: none;
-  border-radius: 16px;
-  margin-bottom: 10px;
-  background-color: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
+  cursor: pointer;
+  align-self: center;
+  font-size: 14px;
+}
+
+.chat-header {
+  text-align: center;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  flex: 0 0 auto; /* фиксированная высота для заголовка */
+}
+
+.message-list {
+  flex: 1 1 auto; /* растягиваем по вертикали */
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.message-bubble {
+  padding: 10px 15px;
+  border-radius: 20px;
+  margin: 5px 0;
+  max-width: 80%;
+  word-wrap: break-word;
+  font-size: 14px;
+}
+
+.sent {
+  background: #7c838a;
+  color: white;
+  align-self: flex-end;
+}
+
+.received {
+  background: #f0f0f0;
+  color: #333;
+  align-self: flex-start;
+}
+
+.message-input-area {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-top: 1px solid #e0e0e0;
+  flex: 0 0 auto; /* фиксированная высота для поля ввода */
+  background: #fff;
+}
+
+.message-input-area .input-field {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.message-input-area .send-button {
+  margin-left: 10px;
+  padding: 10px 15px;
+  font-size: 16px;
 }

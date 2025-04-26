@@ -61,4 +61,13 @@ export class ChatComponent {
     this.http.get<any[]>(`http://localhost:8080/api/messages/${this.email}`)
       .subscribe(data => this.messages = data);
   }
+
+  currentChatPartner(): string {
+    if (!this.messages || this.messages.length === 0) {
+      return 'No conversation';
+    }
+
+    const lastMsg = [...this.messages].reverse().find(msg => msg.sender !== this.email);
+    return lastMsg ? lastMsg.sender : 'You';
+  }
 }
