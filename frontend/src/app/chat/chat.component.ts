@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { log } from 'node:console';
 
 @Component({
   selector: 'app-chat',
@@ -15,9 +16,16 @@ export class ChatComponent {
   recipient = '';
   content = '';
   messages: any[] = [];
+  users: any[] = [];
   isLoggedIn = false;
 
   constructor(private http: HttpClient) {}
+
+  loadUsers()
+  {
+    this.http.get<any[]>(`http://localhost:8080/api/users/${this.email}`)
+    .subscribe(data => this.users = data);
+  }
 
   login() {
     this.http.post<any>('http://localhost:8080/api/login', {
@@ -26,10 +34,11 @@ export class ChatComponent {
     }).subscribe({
       next: () => {
         this.isLoggedIn = true;
-        this.loadMessages();
       },
       error: () => alert('Ошибка авторизации')
     });
+
+    this.loadUsers();
   }
 
   register() {
@@ -53,7 +62,7 @@ export class ChatComponent {
       content: this.content
     }).subscribe(() => {
       this.content = '';
-      this.loadMessages();
+      this.loadMessagesSpecificPerson(this.recipient);
     });
   }
 
@@ -62,9 +71,19 @@ export class ChatComponent {
     this.isLoggedIn = false;
   }
 
-  loadMessages() {
-    this.http.get<any[]>(`http://localhost:8080/api/messages/${this.email}`)
-      .subscribe(data => this.messages = data);
+  loadMessagesSpecificPerson(targetEmail: string): void {
+
+    console.log('HALO');
+    
+    this.http.get<any[]>(`http://localhost:8080/api/messages/${this.email}/${targetEmail}`)
+      .subscribe({
+        next: (data) => {
+          this.messages = data;
+        },
+        error: (error) => {
+          console.error('Ошибка загрузки сообщений:', error);
+        }
+      });
   }
 
   currentChatPartner(): string {

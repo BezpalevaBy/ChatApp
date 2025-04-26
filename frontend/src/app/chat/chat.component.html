@@ -5,11 +5,18 @@
     <input type="email" [(ngModel)]="email" placeholder="Login" class="input-field">
     <input type="password" [(ngModel)]="password" placeholder="Password" class="input-field">
     <button (click)="login()" class="login-button">Login</button>
+    <button (click)="register()" class="register-button">Register</button>
   </div>
 </div>
 
 <div *ngIf="isLoggedIn" class="chat-screen">
   <div class="chat-box">
+    <div class="users-list">
+      <div button (click)="loadMessagesSpecificPerson(user.email)" *ngFor="let user of users" class="message-bubble">
+        {{ user.email }}
+      </div>
+    </div>
+
     <div class="chat-header">
       <h3>{{ currentChatPartner() }}</h3>
     </div>
@@ -26,6 +33,7 @@
 
     <div class="message-input-area">
       <input type="text" [(ngModel)]="content" placeholder="Send a message" class="input-field">
+      <input type="recipient" [(ngModel)]="recipient" placeholder="Mail" class="input-field">
       <button (click)="sendMessage()" class="send-button">&#10148;</button>
     </div>
   </div>
