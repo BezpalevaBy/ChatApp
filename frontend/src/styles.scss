@@ -31,6 +31,16 @@ body {
   flex-direction: column;
 }
 
+.message-exit-area .exit-button {
+  margin-left: 10px;
+  font-size: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: start;
+  padding: 0;
+}
+
 .chat-name {
   font-size: 16px;
   margin-bottom: 20px;

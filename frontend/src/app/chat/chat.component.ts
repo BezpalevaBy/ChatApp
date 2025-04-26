@@ -57,6 +57,11 @@ export class ChatComponent {
     });
   }
 
+  exit()
+  {
+    this.isLoggedIn = false;
+  }
+
   loadMessages() {
     this.http.get<any[]>(`http://localhost:8080/api/messages/${this.email}`)
       .subscribe(data => this.messages = data);

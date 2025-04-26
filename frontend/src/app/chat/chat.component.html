@@ -14,6 +14,10 @@
       <h3>{{ currentChatPartner() }}</h3>
     </div>
 
+    <div class="message-exit-area">
+      <button (click)="exit()" class="exit-button">⛔</button>
+    </div>
+
     <div class="message-list">
       <div *ngFor="let msg of messages" [class.sent]="msg.sender === email" [class.received]="msg.sender !== email" class="message-bubble">
         {{ msg.content }}
