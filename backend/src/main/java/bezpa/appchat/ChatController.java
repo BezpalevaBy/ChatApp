@@ -65,10 +65,8 @@ public List<User> getUsers(@PathVariable String email) {
     logger.info(users.toString());
 
     return users;
-}
-
-
-
+    }
+    
     @PostMapping("/messages")
     public Message sendMessage(@RequestBody Message message) {
         message.setTimestamp(LocalDateTime.now());
