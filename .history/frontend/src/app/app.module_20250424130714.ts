@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -9,15 +9,15 @@ import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
+    AppComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule,
-    AppComponent,
-    ChatComponent
+    AppRoutingModule
   ],
-  //bootstrap: [AppComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
