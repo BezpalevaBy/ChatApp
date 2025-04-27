@@ -63,6 +63,6 @@ export class ChatComponent implements OnInit {
   }
 
   exit() {
-    this.router.navigate(['/chats']); // <== Переход на список чатов
+    this.router.navigate(['/chats']);
   }
 }

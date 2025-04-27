@@ -3,11 +3,20 @@
     Chats
   </div>
 
+  <div class="new-user-form">
+    <input [(ngModel)]="newEmail" placeholder="Введите email или ник" class="new-user-input">
+    <button (click)="startNewChat()" class="new-user-button">Написать новому</button>
+  </div>
+
   <div class="user-list">
     <div *ngFor="let user of users" (click)="selectUser(user.email)" class="user-card">
       <div class="user-email">
         {{ user.email === currentEmail ? 'Заметки' : user.email }}
       </div>
     </div>
+  </div>
+
+  <div class="message-exit-area">
+    <button (click)="exit()" class="exit-button">⛔</button>
   </div>
 </div>

@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-chat-list',
   templateUrl: './chat-list.component.html',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   styleUrls: ['./chat-list.component.scss']
 })
 export class ChatListComponent implements OnInit {
@@ -38,8 +39,19 @@ export class ChatListComponent implements OnInit {
     .subscribe(data => this.users = data);
   }
 
+  newEmail: string = '';
+
+  startNewChat() {
+    if (this.newEmail && this.newEmail.trim() !== '') {
+      this.router.navigate(['/chat', this.newEmail.trim()]);
+    }
+  }
 
   selectUser(email: string) {
     this.router.navigate(['/chat', email]);
+  }
+
+  exit() {
+    this.router.navigate(['']);
   }
 }
