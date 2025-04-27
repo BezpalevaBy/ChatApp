@@ -23,13 +23,19 @@ export class ChatListComponent implements OnInit {
       this.currentEmail = savedEmail;
     }
 
-    this.loadUsers();
+    this.loadConnectedUsers();
   }
 
   loadUsers() {
     this.http.get<any[]>('http://localhost:8080/api/users').subscribe(data => {
      this.users = data;
     });
+  }
+
+  loadConnectedUsers()
+  {
+    this.http.get<any[]>(`http://localhost:8080/api/users/${this.currentEmail}`)
+    .subscribe(data => this.users = data);
   }
 
 
