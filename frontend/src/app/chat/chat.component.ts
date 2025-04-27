@@ -1,59 +1,55 @@
-import { Component } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router'; 
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { log } from 'node:console';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
+  templateUrl: './chat.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
-  templateUrl: './chat.component.html'
+  imports: [CommonModule, FormsModule, RouterModule],
+  styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent {
-  email = '';
-  password = '';
-  recipient = '';
+export class ChatComponent implements OnInit {
+  email = 'user@example.com';
+  recipient: string = '';
   content = '';
   messages: any[] = [];
-  users: any[] = [];
-  isLoggedIn = false;
+  isLoggedIn = true;
 
-  constructor(private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 
-  loadUsers()
-  {
-    this.http.get<any[]>(`http://localhost:8080/api/users/${this.email}`)
-    .subscribe(data => this.users = data);
-  }
-
-  login() {
-    this.http.post<any>('http://localhost:8080/api/login', {
-      email: this.email,
-      password: this.password
-    }).subscribe({
-      next: () => {
-        this.isLoggedIn = true;
-      },
-      error: () => alert('Ошибка авторизации')
+  ngOnInit(): void {
+    const savedEmail = localStorage.getItem('currentEmail');
+    if (savedEmail) {
+      this.email = savedEmail; // <-- Используем сохранённый email
+    }
+  
+    this.route.paramMap.subscribe(params => {
+      this.recipient = params.get('email')!;
+      this.loadMessagesSpecificPerson(this.recipient);
     });
+  }  
 
-    this.loadUsers();
+  loadMessagesSpecificPerson(targetEmail: string) {
+    this.http.get<any[]>(`http://localhost:8080/api/messages/${this.email}/${targetEmail}`)
+      .subscribe({
+        next: (data) => {
+          this.messages = data;
+          setTimeout(() => this.scrollToBottom(), 100);
+        },
+        error: (error) => console.error('Ошибка загрузки сообщений:', error)
+      });
   }
-
-  register() {
-    this.http.post<any>('http://localhost:8080/api/register', {
-      email: this.email,
-      password: this.password
-    }).subscribe({
-      next: () => {
-        alert('Регистрация прошла успешно. Теперь можно войти.');
-      },
-      error: (err) => {
-        alert(err.error.message || 'Ошибка регистрации');
-      }
-    });
-  }
+  
+  scrollToBottom() {
+    const element = document.querySelector('.message-list');
+    if (element) {
+      element.scrollTop = element.scrollHeight;
+    }
+  }    
 
   sendMessage() {
     this.http.post('http://localhost:8080/api/messages', {
@@ -66,32 +62,7 @@ export class ChatComponent {
     });
   }
 
-  exit()
-  {
-    this.isLoggedIn = false;
-  }
-
-  loadMessagesSpecificPerson(targetEmail: string): void {
-
-    console.log('HALO');
-    
-    this.http.get<any[]>(`http://localhost:8080/api/messages/${this.email}/${targetEmail}`)
-      .subscribe({
-        next: (data) => {
-          this.messages = data;
-        },
-        error: (error) => {
-          console.error('Ошибка загрузки сообщений:', error);
-        }
-      });
-  }
-
-  currentChatPartner(): string {
-    if (!this.messages || this.messages.length === 0) {
-      return 'No conversation';
-    }
-
-    const lastMsg = [...this.messages].reverse().find(msg => msg.sender !== this.email);
-    return lastMsg ? lastMsg.sender : 'You';
+  exit() {
+    this.router.navigate(['/chats']); // <== Переход на список чатов
   }
 }
