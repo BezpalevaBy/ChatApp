@@ -1,0 +1,43 @@
+.login-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #f7f8fa;
+  }
+  
+  .login-box {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    text-align: center;
+    width: 300px;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    background: #fff9db;
+    outline: none;
+  }
+  
+  .login-button, .register-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 25px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  
+  .login-button:hover, .register-button:hover {
+    background: #0056b3;
+  }
+  
