@@ -1,43 +1,86 @@
 .login-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: #f7f8fa;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #FCFCFC;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.login-container {
+  width: 273px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-label {
+  font-size: 18px;
+  color: #4a4a4a;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.input-field {
+  width: 100%;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 999px !important;
+  box-sizing: border-box;
+  background-color: #FCFCFC;
+  appearance: none;
+}
+
+.login-button {
+  width: 62.3%;
+  height: 29px;
+  border-radius: 999px;
+  border: none;
+  background-color: #8A9199;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.login-button:hover {
+  background-color: #6e747b;
+}
+
+.register-button {
+  width: 62.3%;
+  height: 29px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: none;
+  background-color: #8A9199; 
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background-color: #6e747b;
   }
-  
-  .login-box {
-    background: white;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    text-align: center;
-    width: 300px;
-  }
-  
-  .input-field {
-    width: 100%;
-    padding: 10px 15px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    background: #fff9db;
-    outline: none;
-  }
-  
-  .login-button, .register-button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background: #007bff;
-    color: white;
-    border-radius: 25px;
-    margin-top: 10px;
-    cursor: pointer;
-  }
-  
-  .login-button:hover, .register-button:hover {
-    background: #0056b3;
-  }
-  
+}
+
+.input-group,
+.login-button,
+.register-button {
+  margin-bottom: 20px;
+}
+
+.login-container > *:last-child {
+  margin-bottom: 0;
+}

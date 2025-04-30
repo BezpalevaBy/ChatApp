@@ -4,18 +4,25 @@
     <h3>{{ recipient }}</h3>
   </div>
 
+  <div class="message-exit-area">
+    <button (click)="exit()" class="exit-button">EXIT</button>
+  </div>
+
   <div class="message-list">
-    <div *ngFor="let msg of messages" [class.sent]="msg.sender === email" [class.received]="msg.sender !== email" class="message-bubble">
-      {{ msg.content }}
+    <div *ngFor="let msg of messages" 
+         [class.sent]="msg.sender === email" 
+         [class.received]="msg.sender !== email" 
+         class="message-bubble">
+
+      <div class="message-content">{{ msg.content }}</div>
+
+      <div class="message-timestamp">{{ msg.timestamp | date: 'shortTime' }}</div>
+
     </div>
   </div>
 
   <div class="message-input-area">
     <input type="text" [(ngModel)]="content" placeholder="Send a message" class="input-field">
     <button (click)="sendMessage()" class="send-button">&#10148;</button>
-  </div>
-
-  <div class="message-exit-area">
-    <button (click)="exit()" class="exit-button">⛔</button>
   </div>
 </div>

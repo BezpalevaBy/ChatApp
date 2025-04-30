@@ -1,3 +1,4 @@
 Z:
-cd \ChatApp\frontend
+cd \ChatApp
+cd frontend
 ng serve
