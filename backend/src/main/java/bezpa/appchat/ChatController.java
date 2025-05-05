@@ -28,27 +28,31 @@ public class ChatController {
     @Autowired
     private UserRepository userRepo;
 
+    @Autowired
+    private UserRepository userRepository;
+
     private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user) {
-        Optional<User> existing = userRepo.findByEmailAndPassword(user.getEmail(), user.getPassword());
+    public ResponseEntity<User> login(@RequestBody User user) {
+        Optional<User> existing = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
         if (existing.isPresent()) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(existing.get());
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
 
+
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
-        Optional<User> existing = userRepo.findByEmail(user.getEmail());
-        if (existing.isPresent()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists");
+    public ResponseEntity<User> register(@RequestBody User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
-        userRepo.save(user);
-        return ResponseEntity.ok().build();
+        User saved = userRepository.save(user);
+        return ResponseEntity.ok(saved);
     }
+
 
     // Получить всех пользователей (если хочешь всех)
     @GetMapping("/users")
@@ -83,7 +87,7 @@ public class ChatController {
 
     List<User> users = userRepo.findAllByEmailIn(emails);
 
-    logger.info(users.toString());
+    logger.info("Users connected with {}: {}", email, users);
 
     return users;
     }
@@ -93,6 +97,7 @@ public class ChatController {
     public ResponseEntity<?> sendMessage(@RequestBody Message message) {
         message.setTimestamp(LocalDateTime.now());
         messageRepo.save(message);
+        logger.info("Message sent from {} to {}", message.getSender(), message.getRecipient());
         return ResponseEntity.ok().build();
     }
 }

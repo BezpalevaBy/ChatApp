@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-chat',
@@ -24,7 +25,7 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     const savedEmail = localStorage.getItem('currentEmail');
     if (savedEmail) {
-      this.email = savedEmail; // <-- Используем сохранённый email
+      this.email = savedEmail;
     }
   
     this.route.paramMap.subscribe(params => {
@@ -34,7 +35,7 @@ export class ChatComponent implements OnInit {
   }  
 
   loadMessagesSpecificPerson(targetEmail: string) {
-    this.http.get<any[]>(`http://localhost:8080/api/messages/${this.email}/${targetEmail}`)
+    this.http.get<any[]>(`${environment.apiUrl}/api/messages/${this.email}/${targetEmail}`)
       .subscribe({
         next: (data) => {
           this.messages = data;
@@ -52,7 +53,7 @@ export class ChatComponent implements OnInit {
   }    
 
   sendMessage() {
-    this.http.post('http://localhost:8080/api/messages', {
+    this.http.post(`${environment.apiUrl}/api/messages`, {
       sender: this.email,
       recipient: this.recipient,
       content: this.content

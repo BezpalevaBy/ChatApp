@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-chat-list',
@@ -28,14 +29,14 @@ export class ChatListComponent implements OnInit {
   }
 
   loadUsers() {
-    this.http.get<any[]>('http://localhost:8080/api/users').subscribe(data => {
+    this.http.get<any[]>(`${environment.apiUrl}/api/users`).subscribe(data => {
      this.users = data;
     });
   }
 
   loadConnectedUsers()
   {
-    this.http.get<any[]>(`http://localhost:8080/api/users/${this.currentEmail}`)
+    this.http.get<any[]>(`${environment.apiUrl}/api/users/${this.currentEmail}`)
     .subscribe(data => this.users = data);
   }
 
