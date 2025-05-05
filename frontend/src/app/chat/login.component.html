@@ -1,19 +1,19 @@
 <div class="login-screen">
   <div class="login-container">
+    <form [formGroup]="form">
+      <div class="input-group">
+        <label class="input-label">Login</label>
+        <input type="email" formControlName="email" class="input-field">
+      </div>
 
-    <div class="input-group">
-      <label class="input-label">Login</label>
-      <input type="email" [(ngModel)]="email" class="input-field">
-    </div>
+      <div class="input-group">
+        <label class="input-label">Password</label>
+        <input type="password" formControlName="password" class="input-field">
+      </div>
 
-    <div class="input-group">
-      <label class="input-label">Password</label>
-      <input type="password" [(ngModel)]="password" class="input-field">
-    </div>
-
-    <button (click)="login()" class="login-button">Login</button>
-    
-    <button (click)="register()" class="register-button">Register</button>
-
+      <button type="button" (click)="login()" class="login-button">Login</button>
+      
+      <button type="button" (click)="register()" class="register-button">Register</button>
+    </form>
   </div>
 </div>

@@ -41,6 +41,7 @@
 }
 
 .login-button {
+  display: block;
   width: 62.3%;
   height: 29px;
   border-radius: 999px;
@@ -49,6 +50,7 @@
   color: white;
   font-size: 14px;
   font-weight: 500;
+  margin: 10px auto;
   cursor: pointer;
   transition: background 0.2s ease;
 }
@@ -58,6 +60,7 @@
 }
 
 .register-button {
+  display: block;
   width: 62.3%;
   height: 29px;
   padding: 0 10px;
@@ -67,6 +70,7 @@
   color: white;
   font-size: 14px;
   font-weight: 500;
+  margin: 10px auto;
   cursor: pointer;
   transition: background 0.2s ease;
 

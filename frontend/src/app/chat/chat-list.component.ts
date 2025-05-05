@@ -43,10 +43,15 @@ export class ChatListComponent implements OnInit {
   newEmail: string = '';
 
   startNewChat() {
-    if (this.newEmail && this.newEmail.trim() !== '') {
-      this.router.navigate(['/chat', this.newEmail.trim()]);
-    }
-  }
+    this.http.get<any[]>(`${environment.apiUrl}/api/users`).subscribe(users => {
+      const exists = users.some(user => user.email === this.newEmail);
+      if (!exists) {
+        alert('Пользователь не найден.');
+      } else {
+        this.selectUser(this.newEmail);
+      }
+    });     
+  }  
 
   selectUser(email: string) {
     this.router.navigate(['/chat', email]);
