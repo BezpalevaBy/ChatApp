@@ -60,6 +60,13 @@ if (isMainModule(import.meta.url)) {
   });
 }
 
+export function getPrerenderParams() {
+  return [
+    { email: 'user1@example.com' },
+    { email: 'user2@example.com' }
+  ];
+}
+
 /**
  * Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.
  */
