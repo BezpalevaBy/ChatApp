@@ -1,4 +1,4 @@
-D: 
-cd \ChatApp\
-cd backend
+Z: 
+cd ChatApp\
+cd backend\
 mvn spring-boot:run
