@@ -29,7 +29,7 @@ public class WebConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList("http://93.84.105.42:4200"));  // точный origin Angular
+        config.setAllowedOrigins(Arrays.asList("http://192.168.0.100:4200"));  // точный origin Angular
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 

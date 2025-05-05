@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { environment } from '../../environments/environment';
 
@@ -10,39 +10,60 @@ import { environment } from '../../environments/environment';
   selector: 'app-login',
   templateUrl: './login.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  email = '';
-  password = '';
+  form: FormGroup;
 
-  constructor(private http: HttpClient, private router: Router) {}
-
-  login() {
-    this.http.post<any>(`${environment.apiUrl}/api/login`, {
-      email: this.email,
-      password: this.password
-    }).subscribe({
-      next: () => {
-        localStorage.setItem('currentEmail', this.email);
-        this.router.navigate(['/chats']);
-      },
-      error: () => alert('Ошибка авторизации')
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router
+  ) {
+    this.form = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
-  
+
+  login() {
+    if (this.form.invalid) {
+      alert('Введите корректный email и пароль (минимум 3 символов).');
+      return;
+    }
+
+    const { email, password } = this.form.value;
+
+    this.http.post<any>(`${environment.apiUrl}/api/login`, { email, password }).subscribe({
+      next: () => {
+        localStorage.setItem('currentEmail', email);
+        this.router.navigate(['/chats']);
+      },
+      error: () => alert('Ошибка авторизации: проверьте email и пароль.')
+    });
+  }
 
   register() {
-    this.http.post<any>(`${environment.apiUrl}/api/register`, {
-      email: this.email,
-      password: this.password
-    }).subscribe({
+    if (this.form.invalid) {
+      alert('Введите корректный email и пароль (минимум 3 символов).');
+      return;
+    }
+
+    const { email, password } = this.form.value;
+
+    this.http.post<any>(`${environment.apiUrl}/api/register`, { email, password }).subscribe({
       next: () => {
         alert('Регистрация прошла успешно.');
         this.router.navigate(['/']);
       },
-      error: (err) => alert(err.error.message || 'Ошибка регистрации')
+      error: (err) => {
+        if (err.status === 409) {
+          alert('Такой пользователь уже существует.');
+        } else {
+          alert('Ошибка регистрации.');
+        }
+      }
     });
   }
 }

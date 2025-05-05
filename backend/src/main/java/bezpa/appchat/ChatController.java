@@ -92,9 +92,12 @@ public class ChatController {
     return users;
     }
 
-    // Отправить сообщение
     @PostMapping("/messages")
     public ResponseEntity<?> sendMessage(@RequestBody Message message) {
+        Optional<User> recipientUser = userRepository.findByEmail(message.getRecipient());
+        if (recipientUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Recipient does not exist");
+        }
         message.setTimestamp(LocalDateTime.now());
         messageRepo.save(message);
         logger.info("Message sent from {} to {}", message.getSender(), message.getRecipient());
