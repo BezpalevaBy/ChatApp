@@ -1,3 +1,3 @@
-cd C:\Users\bezpa\Desktop\ChatApp
-cd backend
+Z: 
+cd \ChatApp\backend\
 mvn spring-boot:run
