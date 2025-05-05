@@ -1,4 +1,3 @@
-Z:
-cd \ChatApp
+cd C:\Users\bezpa\Desktop\ChatApp
 cd frontend
 ng serve --host 0.0.0.0 --port 4200
